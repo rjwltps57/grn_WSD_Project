@@ -195,14 +195,6 @@ router.post('/deleteAnswer', (req, res, next) => {
             })
         })
     })
-
-    Answer_DB.deleteMany({ post_id: req.body.post_id}, (err) => {
-        if (err) { throw err }
-        Post_DB.deleteOne({_id: req.body.post_id}, (err2) => {
-            if (err2) { throw err2 }
-            res.json({"result": "ok"});
-        })
-    })
 })
 
 router.post('/likePost', (req, res, next) => {
