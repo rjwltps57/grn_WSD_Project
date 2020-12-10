@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema; 
 
 const answerSchema = new Schema({
-    userId: {type: String, required: true},     // User PK
-    postId: {type: String, required: true},     // Post PK
+    user_id: {type: String, required: true},     // User PK
+    post_id: {type: String, required: true},     // Post PK
 
     title: {type: String, required: true},
     description: {type: String, required: true},
