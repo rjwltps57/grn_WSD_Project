@@ -85,7 +85,7 @@ router.post('/createPost', (req, res, next) => {
 })
 
 router.post('/updatePost', (req, res, next) => {
-    Post_DB.findById(req.body.postId, (err, thisPost) => {
+    Post_DB.findById(req.body.post_id, (err, thisPost) => {
         if (err) { throw err }
         thisPost.title = req.body.title;
         thisPost.description = req.body.description;
@@ -115,7 +115,55 @@ router.post('/deletePost', (req, res, next) => {
 })
 
 router.post('/createAnswer', (req, res, next) => {
-    
+    User_DB.findById(req.body.user_id, (err, thisUser) => {
+        if (err) { throw err }
+        var gradeUp = 0;
+        eval("thisUser.cate_" + req.body.category + "Score += 1");
+        eval("var thisScore = thisUser.cate_" + req.body.category + "Score");
+        eval("var thisGrade = thisUser.cate_" + req.body.category + "Grade");
+        if (thisScore >= 5000 && thisGrade == 4){
+            eval("thisUser.cate_" + req.body.category + "Grade = 5");
+            gradeUp = 5;
+        }else if (thisScore >= 500 && thisGrade == 3){
+            eval("thisUser.cate_" + req.body.category + "Grade = 4");
+            gradeUp = 4;
+        }else if (thisScore >= 200 && thisGrade == 2){
+            eval("thisUser.cate_" + req.body.category + "Grade = 3");
+            gradeUp = 3;
+        }else if (thisScore >= 20 && thisGrade == 1){
+            eval("thisUser.cate_" + req.body.category + "Grade = 2");
+            gradeUp = 2;
+        }
+        
+        thisUser.save((err2, updatedUser) => {
+            if (err2) { throw err2 }
+            Post_DB.findById(req.body.post_id, (err3, thisPost) => {
+                if (err3) { throw err3 }
+                thisPost.answerCount += 1;
+                thisPost.save((err4, updatedPost) => {
+                    if (err4) { throw err4 }
+                    var newAnswer = new Answer_DB({
+                        user_id: req.body.user_id,
+                        post_id: req.body.post_id,
+
+                        description: req.body.description,
+                    });
+                    newAnswer.save((err5) => {
+                        if (err5) { throw err5 }
+                        res.json({"gradeUp": gradeUp});
+                    })
+                })
+            })
+        })
+    })
+})
+
+router.post('/readAnswers', (req, res, next) => {
+    // 고민글 pk로 조회하기 때문에, 보안상 post로 ..
+    Answer_DB.find({post_id: req.body.post_id}, (err, answerList) => {
+        if (err) { throw err }
+        res.json(answerList);
+    })
 })
 
 router.post('/updateAnswer', (req, res, next) => {

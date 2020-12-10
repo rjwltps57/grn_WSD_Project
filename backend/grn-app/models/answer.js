@@ -6,7 +6,6 @@ const answerSchema = new Schema({
     user_id: {type: String, required: true},     // User PK
     post_id: {type: String, required: true},     // Post PK
 
-    title: {type: String, required: true},
     description: {type: String, required: true},
     createdDate: { type: Date, default: Date.now },
     likeCount: {type: Number, default: 0},
