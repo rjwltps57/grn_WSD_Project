@@ -211,12 +211,15 @@ router.post('/likePost', (req, res, next) => {
         if (err) { throw err }
         
         var likeFlag = 1;
-        if (post_id in thisUser.userLikePosts){
-            // 공감 취소
-            thisUser.userLikePosts.remove(post_id);
-            likeFlag = 0;
-        } else {
-            // 공감
+        for (var i = 0; i < thisUser.userLikePosts.length; i++){
+            if (post_id == thisUser.userLikePosts[i]){
+                // 공감 취소
+                thisUser.userLikePosts.remove(post_id);
+                likeFlag = 0;
+                break;
+            }
+        }
+        if (likeFlag){  // 공감
             thisUser.userLikePosts.push(post_id);
         }
         thisUser.save((err2) => {
@@ -243,12 +246,15 @@ router.post('/likeAnswer', (req, res, next) => {
         if (err) { throw err }
         
         var likeFlag = 1;
-        if (answer_id in thisUser.userLikeAnswers){
-            // 추천 취소
-            thisUser.userLikeAnswers.remove(answer_id);
-            likeFlag = 0;
-        } else {
-            // 추천
+        for (var i = 0; i < thisUser.userLikeAnswers.length; i++){
+            if (answer_id == thisUser.userLikeAnswers[i]){
+                // 공감 취소
+                thisUser.userLikeAnswers.remove(answer_id);
+                likeFlag = 0;
+                break;
+            }
+        }
+        if (likeFlag){  // 공감
             thisUser.userLikeAnswers.push(answer_id);
         }
         thisUser.save((err2) => {
