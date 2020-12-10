@@ -167,11 +167,40 @@ router.post('/readAnswers', (req, res, next) => {
 })
 
 router.post('/updateAnswer', (req, res, next) => {
-    
+    Answer_DB.findById(req.body.answer_id, (err, thisAnswer) => {
+        if (err) { throw err }
+        thisAnswer.description = req.body.description;
+
+        thisAnswer.save((err2, updatedAnswer) => {
+            if (err2) { throw err2 }
+            res.json({"result": "ok"});
+        })
+    })
 })
 
 router.post('/deleteAnswer', (req, res, next) => {
-    
+    Answer_DB.findById(req.body.answer_id, (err, thisAnswer) => {
+        if (err) { throw err }
+        Post_DB.findById(thisAnswer.post_id, (err2, thisPost) => {
+            if (err2) { throw err2 }
+            if (thisPost.answerCount >= 1)  thisPost.answerCount -= 1;
+            thisPost.save((err3) => {
+                if (err3) { throw err3 }
+                Answer_DB.deleteOne({_id: thisAnswer._id}, (err4) => {
+                    if (err4) { throw err4 }
+                    res.json({"result": "ok"});
+                })
+            })
+        })
+    })
+
+    Answer_DB.deleteMany({ post_id: req.body.post_id}, (err) => {
+        if (err) { throw err }
+        Post_DB.deleteOne({_id: req.body.post_id}, (err2) => {
+            if (err2) { throw err2 }
+            res.json({"result": "ok"});
+        })
+    })
 })
 
 router.post('/likePost', (req, res, next) => {
