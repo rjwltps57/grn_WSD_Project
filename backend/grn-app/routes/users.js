@@ -204,11 +204,67 @@ router.post('/deleteAnswer', (req, res, next) => {
 })
 
 router.post('/likePost', (req, res, next) => {
-    
+    const {user_id, post_id} = req.body;
+    User_DB.findById(user_id, (err, thisUser) => {
+        if (err) { throw err }
+        
+        var likeFlag = 1;
+        if (post_id in thisUser.userLikePosts){
+            // 공감 취소
+            thisUser.userLikePosts.remove(post_id);
+            likeFlag = 0;
+        } else {
+            // 공감
+            thisUser.userLikePosts.push(post_id);
+        }
+        thisUser.save((err2) => {
+            if (err2) { throw err2 }
+            Post_DB.findById(post_id, (err3, thisPost) => {
+                if (err3) { throw err3 }
+                if (likeFlag){
+                    thisPost.likeCount += 1;
+                } else {
+                    thisPost.likeCount -= 1;
+                }
+                thisPost.save((err4) => {
+                    if (err4) { throw err4 }
+                    res.json({"likeFlag": likeFlag});
+                })
+            })
+        })
+    })
 })
 
 router.post('/likeAnswer', (req, res, next) => {
-    
+    const {user_id, answer_id} = req.body;
+    User_DB.findById(user_id, (err, thisUser) => {
+        if (err) { throw err }
+        
+        var likeFlag = 1;
+        if (answer_id in thisUser.userLikeAnswers){
+            // 추천 취소
+            thisUser.userLikeAnswers.remove(answer_id);
+            likeFlag = 0;
+        } else {
+            // 추천
+            thisUser.userLikeAnswers.push(answer_id);
+        }
+        thisUser.save((err2) => {
+            if (err2) { throw err2 }
+            Answer_DB.findById(answer_id, (err3, thisAnswer) => {
+                if (err3) { throw err3 }
+                if (likeFlag){
+                    thisAnswer.likeCount += 1;
+                } else {
+                    thisAnswer.likeCount -= 1;
+                }
+                thisAnswer.save((err4) => {
+                    if (err4) { throw err4 }
+                    res.json({"likeFlag": likeFlag});
+                })
+            })
+        })
+    })
 })
 
 module.exports = router;
