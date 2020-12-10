@@ -69,7 +69,8 @@ router.post('/createPost', (req, res, next) => {
                 description: req.body.description,
                 category: req.body.category,
         
-                targetAges: req.body.targetAges,
+                targetMaxAge: req.body.targetMaxAge,
+                targetMinAge: req.body.targetMinAge,
                 targetSex: req.body.targetSex,
                 targetGrade: req.body.targetGrade,
                 auth_read: req.body.auth_read,
@@ -90,7 +91,8 @@ router.post('/updatePost', (req, res, next) => {
         thisPost.title = req.body.title;
         thisPost.description = req.body.description;
 
-        thisPost.targetAges = req.body.targetAges;
+        thisPost.targetMaxAge = req.body.targetMaxAge;
+        thisPost.targetMinAge = req.body.targetMinAge;
         thisPost.targetSex = req.body.targetSex;
         thisPost.targetGrade = req.body.targetGrade;
         thisPost.auth_read = req.body.auth_read;

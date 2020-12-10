@@ -2,6 +2,18 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
+function getCurrentDate(){
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var today = date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+    var milliseconds = date.getMilliseconds();
+    return new Date(Date.UTC(year, month, today, hours, minutes, seconds, milliseconds));
+}
+
 const postSchema = new Schema({
     user_id: {type: String, required: true},     // User PK
     userNickName: {type: String, required: true},
@@ -9,11 +21,12 @@ const postSchema = new Schema({
     title: {type: String, required: true},
     description: {type: String, required: true},
     category: {type: String, required: true},
-    createdDate: { type: Date, default: Date.now },
+    createdDate: { type: Date, default: getCurrentDate() },
     likeCount: {type: Number, default: 0},
     answerCount: {type: Number, default: 0},
 
-    targetAges: {type: Number, required: true},
+    targetMaxAge: {type: Number, required: true},
+    targetMinAge: {type: Number, required: true},
     targetSex: {type: String, required: true},
     targetGrade: {type: Number, required: true},
 
