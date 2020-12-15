@@ -4,6 +4,18 @@ const User_DB = require('../models/user');
 const Post_DB = require('../models/post');
 const Answer_DB = require('../models/answer');
 
+function getCurrentDate(){
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var today = date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+    var milliseconds = date.getMilliseconds();
+    return new Date(Date.UTC(year, month, today, hours, minutes, seconds, milliseconds));
+}
+
 router.post('/signup', (req, res, next) => {
     var newUser = new User_DB({
         userLikePosts: [],
@@ -76,6 +88,8 @@ router.post('/createPost', (req, res, next) => {
                 auth_read: req.body.auth_read,
                 auth_write: req.body.auth_write,
                 isPrivate: req.body.isPrivate,
+
+                createdDate: getCurrentDate()
             });
             newPost.save((err3, newPost) => {
                 if (err3) { throw err3 }
@@ -148,7 +162,9 @@ router.post('/createAnswer', (req, res, next) => {
                         user_id: req.body.user_id,
                         post_id: req.body.post_id,
 
+                        userNickName: req.body.userNickName,
                         description: req.body.description,
+                        createdDate: getCurrentDate()
                     });
                     newAnswer.save((err5) => {
                         if (err5) { throw err5 }

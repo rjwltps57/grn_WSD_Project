@@ -2,24 +2,13 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
-function getCurrentDate(){
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = date.getMonth();
-    var today = date.getDate();
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var seconds = date.getSeconds();
-    var milliseconds = date.getMilliseconds();
-    return new Date(Date.UTC(year, month, today, hours, minutes, seconds, milliseconds));
-}
-
 const answerSchema = new Schema({
     user_id: {type: String, required: true},     // User PK
     post_id: {type: String, required: true},     // Post PK
 
+    userNickName: {type: String, required: true},
     description: {type: String, required: true},
-    createdDate: { type: Date, default: getCurrentDate() },
+    createdDate: { type: Date },
     likeCount: {type: Number, default: 0},
 });
 

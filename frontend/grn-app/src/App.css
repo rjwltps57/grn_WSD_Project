@@ -1,3 +1,85 @@
+body {
+  background-color: beige;
+  margin: 25px;
+  padding: 25px;
+}
+
+.leftSide {
+  float: left;
+  width: 50%;
+}
+.rightSide {
+  float: right;
+  width: 50%;
+}
+
+.heartIcon {
+  width: 100px;
+  height: 100px;
+}
+
+
+.logo {
+  background: url("./images/logo.png") no-repeat;
+  border: none;
+  width: 496px;
+  height: 136px;
+}
+
+.AnswerContents {
+  margin: 10px;
+  width: 180px;
+}
+.AnswerDescription {
+  width: 600px;
+}
+
+#createAnswerBtn {
+  float: right;
+  margin: 50px;
+}
+
+
+.PostContents {
+  margin: 10px;
+  width: 200px;
+}
+.PostDescription {
+  width: 630px;
+}
+
+.PostEntryTitle {
+  width: 50%;
+}
+
+.cate_line {
+  padding: 30px;
+  float: right;
+}
+
+.Header {
+  background-color: #282c34;
+  padding: 20px;
+  color: antiquewhite;
+  font-size: large;
+  margin: 10px;
+}
+
+.form {
+  padding: 20px;
+  margin: 20px;
+}
+
+.searchBarSpan {
+  float: center;
+}
+
+
+
+
+
+
+
 .App {
   text-align: center;
 }
