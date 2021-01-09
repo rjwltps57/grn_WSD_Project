@@ -1,6 +1,6 @@
 # Web System Desgin Term-Project
 
-본 프로젝트는 아주대학교 웹시스템설계 개인 프로젝트 입니다.<br>
+본 프로젝트는 웹 시스템 설계 학습을 위한 개인 프로젝트 입니다.<br>
 Node와 React로 풀스택 프로그래밍에 대한 이해와 실습을 목표로 합니다.<br>
 
 ## How to run this project
